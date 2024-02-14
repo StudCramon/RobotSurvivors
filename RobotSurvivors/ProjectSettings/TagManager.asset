@@ -1,0 +1,63 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!78 &1
+TagManager:
+  serializedVersion: 2
+  tags:
+  - Enemy
+  - Pellet
+  - HitBox
+  - ExpBar
+  - Silly
+  layers:
+  - Default
+  - TransparentFX
+  - Ignore Raycast
+  - 
+  - Water
+  - UI
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  m_SortingLayers:
+  - name: Default
+    uniqueID: 0
+    locked: 0
+  - name: Backgroung
+    uniqueID: 189782581
+    locked: 0
+  - name: Ground
+    uniqueID: 630368155
+    locked: 0
+  - name: PlayableArea
+    uniqueID: 3096218113
+    locked: 0
+  - name: Decals
+    uniqueID: 1237356347
+    locked: 0
+  - name: Foreground
+    uniqueID: 2578921615
+    locked: 0
