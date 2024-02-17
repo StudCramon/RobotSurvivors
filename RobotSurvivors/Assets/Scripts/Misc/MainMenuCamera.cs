@@ -16,6 +16,7 @@ public class MainMenuCamera : MonoBehaviour
     {
         Vector3 newCameraPosition = transform.position;
         newCameraPosition.x += speed * Time.deltaTime;
+        newCameraPosition.y -= speed * Time.deltaTime;
         transform.position = newCameraPosition;
     }
 }

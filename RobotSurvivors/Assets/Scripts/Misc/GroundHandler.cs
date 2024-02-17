@@ -13,6 +13,10 @@ public class GroundHandler : MonoBehaviour
     float tileHeight;
 
     bool rightSideHasSpawned = false;
+    bool leftSideHasSpawned = false;
+    bool upperSideHasSpawned = false;
+    bool lowerSideHasSpawned = false;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -34,7 +38,32 @@ public class GroundHandler : MonoBehaviour
             Instantiate(tile, spawnPoint, tile.transform.rotation);
             rightSideHasSpawned = true;
         }
-        if(mainCamera.transform.position.x - this.transform.position.x > distanceToSpawnNewTileX * 3)
+
+        if (mainCamera.transform.position.x - this.transform.position.x < -distanceToSpawnNewTileX && !leftSideHasSpawned)
+        {
+            Vector3 spawnPoint = transform.position;
+            spawnPoint.x -= tileWidth;
+            Instantiate(tile, spawnPoint, tile.transform.rotation);
+            leftSideHasSpawned = true;
+        }
+
+        if (mainCamera.transform.position.y - this.transform.position.y > distanceToSpawnNewTileY && !upperSideHasSpawned)
+        {
+            Vector3 spawnPoint = transform.position;
+            spawnPoint.y += tileHeight;
+            Instantiate(tile, spawnPoint, tile.transform.rotation);
+            upperSideHasSpawned = true;
+        }
+
+        if (mainCamera.transform.position.y - this.transform.position.y < -distanceToSpawnNewTileY && !lowerSideHasSpawned)
+        {
+            Vector3 spawnPoint = transform.position;
+            spawnPoint.y -= tileHeight;
+            Instantiate(tile, spawnPoint, tile.transform.rotation);
+            lowerSideHasSpawned = true;
+        }
+
+        if (Vector3.Distance(transform.position, mainCamera.transform.position) > 200.0f)
         {
             Destroy(gameObject);
         }
