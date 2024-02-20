@@ -10,8 +10,7 @@ public class GroundHandler : MonoBehaviour
 
     float tileWidth; //length on x
     float tileHeight; // length on y
-    float offset = 50.0f;
-    float distanceToDestroyTiles = 50.0f;
+    float distanceToDestroyTiles = 250.0f;
 
     Dictionary<Vector3, Object> tiles = new Dictionary<Vector3, Object>();
 
@@ -27,25 +26,15 @@ public class GroundHandler : MonoBehaviour
     void Update()
     {
         tiles.EnsureCapacity(1);
-        Vector3[] pointsOfCheck = new Vector3[4];
-        pointsOfCheck[0] = new Vector3(offset, offset, 0);
-        pointsOfCheck[1] = new Vector3(-offset, offset, 0);
-        pointsOfCheck[2] = new Vector3(offset, -offset, 0);
-        pointsOfCheck[3] = new Vector3(-offset, -offset, 0);
+        Vector3[] pointsOfCheck;
 
-        for(int i = 0; i < 4; i++)
+        GetPointsOutsideOfCameraView(out pointsOfCheck);
+
+        for (int i = 0; i < 4; i++)
         {
-            pointsOfCheck[i].x += mainCamera.transform.position.x;
-            pointsOfCheck[i].y += mainCamera.transform.position.y;
-
             Vector3 newTilePosition = GetTilePosOnPoint(pointsOfCheck[i]);
             AddTileOnPosition(newTilePosition);
         }
-
-        Debug.DrawLine(pointsOfCheck[0], pointsOfCheck[1], Color.red);
-        Debug.DrawLine(pointsOfCheck[1], pointsOfCheck[2], Color.yellow);
-        Debug.DrawLine(pointsOfCheck[2], pointsOfCheck[3], Color.green);
-        Debug.DrawLine(pointsOfCheck[3], pointsOfCheck[0], Color.blue);
 
         DestroyDistantTiles();
     }
@@ -56,7 +45,7 @@ public class GroundHandler : MonoBehaviour
         bool ShouldRemoveTile = false;
         foreach (KeyValuePair<Vector3, Object> tile in tiles)
         {
-            if (Vector3.Distance(tile.Key, mainCamera.transform.position) > 500.0f)
+            if (Vector3.Distance(tile.Key, mainCamera.transform.position) > distanceToDestroyTiles)
             {
                 ShouldRemoveTile = true;
                 KeyToRemove = tile.Key;
@@ -113,5 +102,15 @@ public class GroundHandler : MonoBehaviour
         {
             tiles.Add(pos, Instantiate(tile, pos, tile.transform.rotation));
         }
+    }
+
+    void GetPointsOutsideOfCameraView(out Vector3[] vector)
+    {
+        Camera camera = mainCamera.GetComponent<Camera>();
+        vector = new Vector3[4];
+        vector[0] = camera.ViewportToWorldPoint(new Vector3(-0.5f, -0.5f, camera.nearClipPlane));
+        vector[1] = camera.ViewportToWorldPoint(new Vector3(-0.5f, 1.5f, camera.nearClipPlane));
+        vector[2] = camera.ViewportToWorldPoint(new Vector3(1.5f, -0.5f, camera.nearClipPlane));
+        vector[3] = camera.ViewportToWorldPoint(new Vector3(1.5f, 1.5f, camera.nearClipPlane));
     }
 }
