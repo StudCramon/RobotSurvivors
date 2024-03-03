@@ -6,6 +6,7 @@ using UnityEngine.SceneManagement;
 public class AttackHandler : MonoBehaviour
 {
     [SerializeField] List<GenericAttack> attacks;
+    [SerializeField] List<GenericAttack> bruhs;
     [SerializeField] DestroyableObject attackHolder;
 
     List<GenericAttack> pendingAttacks = new List<GenericAttack>();

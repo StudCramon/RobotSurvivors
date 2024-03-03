@@ -6,6 +6,7 @@ using UnityEngine;
 public class EnemySpawner : MonoBehaviour
 {
     [SerializeField] GameObject[] enemy;
+    Camera mainCamera;
 
     float outsideCoordinateX = 45.0f;
     float outsideCoordinateY = 20.0f;
@@ -14,9 +15,15 @@ public class EnemySpawner : MonoBehaviour
 
     bool readyToSpawn = true;
 
+    private void OnDisable()
+    {
+        Timer.instance.onMinuteDelta -= IncreaseSpawnRate;
+    }
     // Start is called before the first frame update
     void Start()
     {
+        Timer.instance.onMinuteDelta += IncreaseSpawnRate;
+        mainCamera = GameObject.FindGameObjectWithTag("MainCamera").GetComponent<Camera>();
     }
 
     // Update is called once per frame
@@ -56,8 +63,14 @@ public class EnemySpawner : MonoBehaviour
     Vector3 RandomCoordinatesOutsideOfView()
     {
         Vector3 cameraPosition = FindAnyObjectByType<CameraScript>().transform.position;
-        float xCoord = 0.0f;
-        float yCoord = 0.0f;
+        float xCoord;
+        float yCoord;
+
+        Vector3 upperRightCornerCameraCoord = mainCamera.ViewportToWorldPoint(new Vector3(1.0f, 1.0f, mainCamera.nearClipPlane));
+
+        outsideCoordinateX = upperRightCornerCameraCoord.x;
+        outsideCoordinateY = upperRightCornerCameraCoord.y;
+
         if (RandomSign() == 1)
         {
             xCoord = cameraPosition.x + Random.Range(outsideCoordinateX, outsideCoordinateX + distanceFromEdge) * RandomSign();
@@ -70,5 +83,18 @@ public class EnemySpawner : MonoBehaviour
         }
 
         return new Vector3(xCoord, yCoord, 0.0f);
+    }
+
+    void IncreaseSpawnRate()
+    {
+        if(coolDown > 1.0f)
+        {
+            coolDown -= 1.0f;
+        }
+        else
+        {
+            coolDown = 0.0f;
+        }
+        Debug.Log("SpawnRate is: " + coolDown);
     }
 }

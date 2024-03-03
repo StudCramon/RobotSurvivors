@@ -53,6 +53,15 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": true
+                },
+                {
+                    ""name"": ""InstantAttackDirection"",
+                    ""type"": ""Button"",
+                    ""id"": ""597a3c91-ae6f-48cc-adc0-50cea5a49b76"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
                 }
             ],
             ""bindings"": [
@@ -187,6 +196,17 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
                     ""action"": ""CameraZoom"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""4207b6c5-b027-4c71-806e-510c5ed94dc5"",
+                    ""path"": ""<Keyboard>/shift"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""InstantAttackDirection"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
                 }
             ]
         }
@@ -198,6 +218,7 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
         m_Player_Move = m_Player.FindAction("Move", throwIfNotFound: true);
         m_Player_Fire = m_Player.FindAction("Fire", throwIfNotFound: true);
         m_Player_CameraZoom = m_Player.FindAction("CameraZoom", throwIfNotFound: true);
+        m_Player_InstantAttackDirection = m_Player.FindAction("InstantAttackDirection", throwIfNotFound: true);
     }
 
     public void Dispose()
@@ -262,6 +283,7 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
     private readonly InputAction m_Player_Move;
     private readonly InputAction m_Player_Fire;
     private readonly InputAction m_Player_CameraZoom;
+    private readonly InputAction m_Player_InstantAttackDirection;
     public struct PlayerActions
     {
         private @PlayerControls m_Wrapper;
@@ -269,6 +291,7 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
         public InputAction @Move => m_Wrapper.m_Player_Move;
         public InputAction @Fire => m_Wrapper.m_Player_Fire;
         public InputAction @CameraZoom => m_Wrapper.m_Player_CameraZoom;
+        public InputAction @InstantAttackDirection => m_Wrapper.m_Player_InstantAttackDirection;
         public InputActionMap Get() { return m_Wrapper.m_Player; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -287,6 +310,9 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
             @CameraZoom.started += instance.OnCameraZoom;
             @CameraZoom.performed += instance.OnCameraZoom;
             @CameraZoom.canceled += instance.OnCameraZoom;
+            @InstantAttackDirection.started += instance.OnInstantAttackDirection;
+            @InstantAttackDirection.performed += instance.OnInstantAttackDirection;
+            @InstantAttackDirection.canceled += instance.OnInstantAttackDirection;
         }
 
         private void UnregisterCallbacks(IPlayerActions instance)
@@ -300,6 +326,9 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
             @CameraZoom.started -= instance.OnCameraZoom;
             @CameraZoom.performed -= instance.OnCameraZoom;
             @CameraZoom.canceled -= instance.OnCameraZoom;
+            @InstantAttackDirection.started -= instance.OnInstantAttackDirection;
+            @InstantAttackDirection.performed -= instance.OnInstantAttackDirection;
+            @InstantAttackDirection.canceled -= instance.OnInstantAttackDirection;
         }
 
         public void RemoveCallbacks(IPlayerActions instance)
@@ -322,5 +351,6 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
         void OnMove(InputAction.CallbackContext context);
         void OnFire(InputAction.CallbackContext context);
         void OnCameraZoom(InputAction.CallbackContext context);
+        void OnInstantAttackDirection(InputAction.CallbackContext context);
     }
 }

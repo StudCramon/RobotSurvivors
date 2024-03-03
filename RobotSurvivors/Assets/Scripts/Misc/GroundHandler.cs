@@ -10,7 +10,7 @@ public class GroundHandler : MonoBehaviour
 
     float tileWidth; //length on x
     float tileHeight; // length on y
-    float distanceToDestroyTiles = 250.0f;
+    float distanceToDestroyTiles = 350.0f;
 
     Dictionary<Vector3, Object> tiles = new Dictionary<Vector3, Object>();
 
@@ -92,7 +92,6 @@ public class GroundHandler : MonoBehaviour
         float tileY = tileHeight * TilePosYScalar;
         float tileZ = 0;
         Vector3 newTilePosition = new Vector3(tileX, tileY, tileZ);
-        //Debug.Log(newTilePosition);
         return newTilePosition;
     }
 
@@ -112,5 +111,10 @@ public class GroundHandler : MonoBehaviour
         vector[1] = camera.ViewportToWorldPoint(new Vector3(-0.5f, 1.5f, camera.nearClipPlane));
         vector[2] = camera.ViewportToWorldPoint(new Vector3(1.5f, -0.5f, camera.nearClipPlane));
         vector[3] = camera.ViewportToWorldPoint(new Vector3(1.5f, 1.5f, camera.nearClipPlane));
+
+        Debug.DrawLine(vector[0], vector[1]);
+        Debug.DrawLine(vector[1], vector[2]);
+        Debug.DrawLine(vector[2], vector[3]);
+        Debug.DrawLine(vector[3], vector[0]);
     }
 }

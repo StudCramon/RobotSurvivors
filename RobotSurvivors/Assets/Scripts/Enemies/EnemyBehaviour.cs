@@ -47,7 +47,7 @@ public class EnemyBehaviour : DestroyableObject
 
     void HandleMovement()
     {
-        if(enmRB2D.velocity.magnitude < speed)
+        if (enmRB2D.velocity.magnitude < speed && player != null)
         {
             currentDirection = player.transform.position - transform.position;
             enmRB2D.AddForce(currentDirection.normalized * speed);

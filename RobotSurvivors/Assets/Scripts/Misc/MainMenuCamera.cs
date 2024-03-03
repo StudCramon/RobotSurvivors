@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class MainMenuCamera : MonoBehaviour
 {
-    float speed = 10.0f;
+    [SerializeField]float speed = 2.0f;
     // Start is called before the first frame update
     void Start()
     {

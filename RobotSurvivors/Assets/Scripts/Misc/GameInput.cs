@@ -40,6 +40,11 @@ public class GameInput : MonoBehaviour
         return playerControls.Player.CameraZoom.ReadValue<float>();
     }
 
+    public float GetInstantAttackDirectionCommand()
+    {
+        return playerControls.Player.InstantAttackDirection.ReadValue<float>();
+    }
+
     public void ReloadScene()
     {
         string nameOfTheScene = SceneManager.GetActiveScene().name;
@@ -60,5 +65,18 @@ public class GameInput : MonoBehaviour
     {
         Application.Quit();
         Debug.Log("QUIT!");
+    }
+
+    public void ToggleFullScreen(bool value)
+    {
+        Screen.fullScreen = !Screen.fullScreen;
+        Debug.Log("Fullscreen is " + Screen.fullScreen + " value is" + value);
+    }
+
+    public void ChangeResolution(int value)
+    {
+        Vector2 resolution = ResolutionDropdown.resolutionNumbers[value];
+        Debug.Log(resolution);
+        Screen.SetResolution((int)resolution.x, (int)resolution.y, Screen.fullScreen);
     }
 }

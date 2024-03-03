@@ -31,6 +31,15 @@
                     "processors": "",
                     "interactions": "",
                     "initialStateCheck": true
+                },
+                {
+                    "name": "InstantAttackDirection",
+                    "type": "Button",
+                    "id": "597a3c91-ae6f-48cc-adc0-50cea5a49b76",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
                 }
             ],
             "bindings": [
@@ -163,6 +172,17 @@
                     "processors": "",
                     "groups": "",
                     "action": "CameraZoom",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "4207b6c5-b027-4c71-806e-510c5ed94dc5",
+                    "path": "<Keyboard>/shift",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "InstantAttackDirection",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }

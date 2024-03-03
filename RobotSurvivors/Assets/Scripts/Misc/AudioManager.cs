@@ -15,6 +15,8 @@ public class AudioManager : MonoBehaviour
 {
     [SerializeField] Sound[] sounds;
 
+    public float currentValue = 1.0f;
+
     public static AudioManager instance;
 
     private void Awake()
@@ -43,5 +45,14 @@ public class AudioManager : MonoBehaviour
     public void PlaySound(SoundNames soundName)
     {
         sounds[(int)soundName].source.Play();
+    }
+
+    public void ChangeVolume(float value)
+    {
+        currentValue = value;
+        foreach (Sound s in sounds)
+        {
+            s.source.volume = value;
+        }
     }
 }

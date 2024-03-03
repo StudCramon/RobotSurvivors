@@ -129,8 +129,15 @@ public class Player : DestroyableObject
     {
         if (moveDir != Vector3.zero)
         {
-            attackDir = RotateVectorToTarget(attackDir, moveDir);
-            //attackDir = Vector3.RotateTowards(attackDir, moveDir, pointerSpeed * Time.deltaTime, 0.01f);
+            if (gameInput.GetInstantAttackDirectionCommand() == 0.0f)
+            {
+                attackDir = RotateVectorToTarget(attackDir, moveDir);
+            }
+            else
+            {
+                attackDir = moveDir;
+            }
+            
         }
     }
 
@@ -139,11 +146,10 @@ public class Player : DestroyableObject
         Quaternion rotationQuaternion;
         Vector3 rotatedVector;
         float angle = pointerSpeed * Time.deltaTime;
-        // Нормализуем вектора
+
         sourceVector.Normalize();
         targetVector.Normalize();
 
-        // Находим ось вращения
         Vector3 axisOfRotation = Vector3.Cross(sourceVector, targetVector);
 
         if (axisOfRotation == Vector3.zero && sourceVector != targetVector)
@@ -151,10 +157,8 @@ public class Player : DestroyableObject
             axisOfRotation = Vector3.forward;
         }
 
-        // Строим кватернион для поворота
         rotationQuaternion = Quaternion.AngleAxis(Mathf.Rad2Deg * angle, axisOfRotation);
 
-        // Поворачиваем исходный вектор
         rotatedVector = rotationQuaternion * sourceVector;
 
         return rotatedVector;
