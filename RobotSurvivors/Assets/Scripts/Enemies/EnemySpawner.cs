@@ -51,7 +51,7 @@ public class EnemySpawner : MonoBehaviour
 
     void SpawnEnemyAtRandomOutsideOfView()
     {
-        GameObject enmy = Instantiate(enemy[0]);
+        GameObject enmy = Instantiate(enemy[Random.value > 0.5 ? 0 : 1]);
         enmy.transform.position = RandomCoordinatesOutsideOfView();
     }
 

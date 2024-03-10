@@ -7,20 +7,8 @@ public class GameInput : MonoBehaviour
 {
     private PlayerControls playerControls;
 
-    //public static GameInput instance;
-
     void Awake()
     {
-        /*if (instance == null)
-        {
-            instance = this;
-            DontDestroyOnLoad(gameObject);
-        }
-        else
-        {
-            Destroy(gameObject);
-        }*/
-
         playerControls = new PlayerControls();
         playerControls.Enable();    
     }
@@ -43,6 +31,11 @@ public class GameInput : MonoBehaviour
     public float GetInstantAttackDirectionCommand()
     {
         return playerControls.Player.InstantAttackDirection.ReadValue<float>();
+    }
+
+    public bool PauseMenuButtonPressed()
+    {
+        return playerControls.Player.Pause.IsPressed();
     }
 
     public void ReloadScene()

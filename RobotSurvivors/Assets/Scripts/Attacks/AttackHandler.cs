@@ -6,7 +6,6 @@ using UnityEngine.SceneManagement;
 public class AttackHandler : MonoBehaviour
 {
     [SerializeField] List<GenericAttack> attacks;
-    [SerializeField] List<GenericAttack> bruhs;
     [SerializeField] DestroyableObject attackHolder;
 
     List<GenericAttack> pendingAttacks = new List<GenericAttack>();
@@ -31,7 +30,14 @@ public class AttackHandler : MonoBehaviour
 
     public void AddAttack(GenericAttack attack)
     {
-        //attacks.Add(attack);
+        foreach(GenericAttack attackItem in attacks)
+        {
+            if(attackItem.GetType() == attack.GetType())
+            {
+                //levelUpAttack
+                return;
+            }
+        }
         pendingAttacks.Add(attack);
     }
 

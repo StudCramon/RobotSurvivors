@@ -9,5 +9,5 @@ public abstract class GenericAttack
     public abstract float CoolDown { get; set; }
     public abstract bool ReadyToFire{ get; set; }
     public abstract void ExecuteAttack(Vector3 position, Quaternion direction, DestroyableObject owner);
-    public abstract DestroyableObject AttackOwner { get; set; }
+    //public abstract DestroyableObject AttackOwner { get; set; }
 }

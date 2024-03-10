@@ -62,6 +62,15 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""Pause"",
+                    ""type"": ""Button"",
+                    ""id"": ""d7218b7c-358d-4caa-8946-38b0ea08ddd1"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
                 }
             ],
             ""bindings"": [
@@ -207,6 +216,17 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
                     ""action"": ""InstantAttackDirection"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""6dc8a83a-14e3-4339-b534-0f029ccee121"",
+                    ""path"": ""<Keyboard>/escape"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Pause"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
                 }
             ]
         }
@@ -219,6 +239,7 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
         m_Player_Fire = m_Player.FindAction("Fire", throwIfNotFound: true);
         m_Player_CameraZoom = m_Player.FindAction("CameraZoom", throwIfNotFound: true);
         m_Player_InstantAttackDirection = m_Player.FindAction("InstantAttackDirection", throwIfNotFound: true);
+        m_Player_Pause = m_Player.FindAction("Pause", throwIfNotFound: true);
     }
 
     public void Dispose()
@@ -284,6 +305,7 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
     private readonly InputAction m_Player_Fire;
     private readonly InputAction m_Player_CameraZoom;
     private readonly InputAction m_Player_InstantAttackDirection;
+    private readonly InputAction m_Player_Pause;
     public struct PlayerActions
     {
         private @PlayerControls m_Wrapper;
@@ -292,6 +314,7 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
         public InputAction @Fire => m_Wrapper.m_Player_Fire;
         public InputAction @CameraZoom => m_Wrapper.m_Player_CameraZoom;
         public InputAction @InstantAttackDirection => m_Wrapper.m_Player_InstantAttackDirection;
+        public InputAction @Pause => m_Wrapper.m_Player_Pause;
         public InputActionMap Get() { return m_Wrapper.m_Player; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -313,6 +336,9 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
             @InstantAttackDirection.started += instance.OnInstantAttackDirection;
             @InstantAttackDirection.performed += instance.OnInstantAttackDirection;
             @InstantAttackDirection.canceled += instance.OnInstantAttackDirection;
+            @Pause.started += instance.OnPause;
+            @Pause.performed += instance.OnPause;
+            @Pause.canceled += instance.OnPause;
         }
 
         private void UnregisterCallbacks(IPlayerActions instance)
@@ -329,6 +355,9 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
             @InstantAttackDirection.started -= instance.OnInstantAttackDirection;
             @InstantAttackDirection.performed -= instance.OnInstantAttackDirection;
             @InstantAttackDirection.canceled -= instance.OnInstantAttackDirection;
+            @Pause.started -= instance.OnPause;
+            @Pause.performed -= instance.OnPause;
+            @Pause.canceled -= instance.OnPause;
         }
 
         public void RemoveCallbacks(IPlayerActions instance)
@@ -352,5 +381,6 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
         void OnFire(InputAction.CallbackContext context);
         void OnCameraZoom(InputAction.CallbackContext context);
         void OnInstantAttackDirection(InputAction.CallbackContext context);
+        void OnPause(InputAction.CallbackContext context);
     }
 }

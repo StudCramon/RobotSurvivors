@@ -76,11 +76,11 @@ public class EnemyBehaviour : DestroyableObject
     {
         if (currentDirection.x > 0)
         {
-            transform.localScale = new Vector3(1, 1, 1);
+            gameObject.GetComponentInChildren<SpriteRenderer>().flipX = false;
         }
         else if (currentDirection.x < 0)
         {
-            transform.localScale = new Vector3(-1, 1, 1);
+            gameObject.GetComponentInChildren<SpriteRenderer>().flipX = true;
         }
     }
 

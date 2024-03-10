@@ -1,5 +1,7 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Threading;
 using UnityEngine;
 using UnityEngine.Rendering;
 
@@ -9,6 +11,7 @@ public class Player : DestroyableObject
 
     [SerializeField] float speed = 100.0f;
     [SerializeField] float drag = 1.0f;
+    [SerializeField] float armorRating = 0.0f;
 
     [SerializeField] int currentExp = 0;
     [SerializeField] int expToLevelUp = 4;
@@ -34,6 +37,7 @@ public class Player : DestroyableObject
 
     public override float MaxHealth { get => maxHealth; set => maxHealth = value; }
     public override float CurrentHealth { get => currentHealth; set => currentHealth = value; }
+    public float ArmorRating { get => armorRating; set => armorRating = value; }
 
     public float Speed { get => speed; set => speed = value; }
     public float InvincibilityWindow { get => invincibilityWindow; set => invincibilityWindow = value; }
@@ -198,6 +202,11 @@ public class Player : DestroyableObject
     {
         if(!isInvincible)
         {
+            amount = amount - armorRating;
+            if(amount < 1.0f)
+            {
+                amount = 1.0f;
+            }
             currentHealth -= amount;
             enableInvincibility = true;
         }
