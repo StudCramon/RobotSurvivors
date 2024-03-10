@@ -1,14 +1,17 @@
 using System.Collections;
 using System.Collections.Generic;
-using Unity.Mathematics;
 using UnityEngine;
 
-public class Pellet : MonoBehaviour
+public class CircularSaw : MonoBehaviour
 {
-    float speed = 40.0f;
-    float timeOfLife = 1.0f;
+    [SerializeField]float radius = 5.0f;
+
+    float counter = 0.0f;
+    float speed = 5.0f;
+    float rotationSpeed = 1000.0f;
     float damage = 1.0f;
-    public DestroyableObject owner;
+    float timeOfLife = 150.0f;
+    [SerializeField] public DestroyableObject owner;
     // Start is called before the first frame update
     void Start()
     {
@@ -18,17 +21,23 @@ public class Pellet : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        GoForward();
-    }
-
-    void GoForward()
-    {
-        transform.position += transform.right * Time.deltaTime * speed;
+        counter = counter + speed * Time.deltaTime;
+        if (owner != null)
+        {
+            Vector3 newPos = owner.transform.position;
+            newPos.x = newPos.x + Mathf.Cos(counter) * radius;
+            newPos.y = newPos.y + Mathf.Sin(counter) * radius;
+            transform.position = newPos;
+        }
+        else
+        {
+            transform.position += Vector3.right * speed * Time.deltaTime;
+        }
+        transform.Rotate(0, 0, rotationSpeed * Time.deltaTime);
     }
 
     IEnumerator Dissapear()
     {
-        Debug.Log("CoroutineStarted!");
         yield return new WaitForSeconds(timeOfLife);
         Destroy(gameObject);
     }
@@ -42,7 +51,6 @@ public class Pellet : MonoBehaviour
             {
                 destroyObj.LoseHealth(damage);
             }
-            Destroy(this.gameObject);
         }
     }
 }

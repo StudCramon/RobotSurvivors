@@ -7,20 +7,8 @@ public class GameInput : MonoBehaviour
 {
     private PlayerControls playerControls;
 
-    //public static GameInput instance;
-
     void Awake()
     {
-        /*if (instance == null)
-        {
-            instance = this;
-            DontDestroyOnLoad(gameObject);
-        }
-        else
-        {
-            Destroy(gameObject);
-        }*/
-
         playerControls = new PlayerControls();
         playerControls.Enable();    
     }
@@ -38,6 +26,16 @@ public class GameInput : MonoBehaviour
     public float GetZoom()
     {
         return playerControls.Player.CameraZoom.ReadValue<float>();
+    }
+
+    public float GetInstantAttackDirectionCommand()
+    {
+        return playerControls.Player.InstantAttackDirection.ReadValue<float>();
+    }
+
+    public bool PauseMenuButtonPressed()
+    {
+        return playerControls.Player.Pause.IsPressed();
     }
 
     public void ReloadScene()
@@ -60,5 +58,18 @@ public class GameInput : MonoBehaviour
     {
         Application.Quit();
         Debug.Log("QUIT!");
+    }
+
+    public void ToggleFullScreen(bool value)
+    {
+        Screen.fullScreen = !Screen.fullScreen;
+        Debug.Log("Fullscreen is " + Screen.fullScreen + " value is" + value);
+    }
+
+    public void ChangeResolution(int value)
+    {
+        Vector2 resolution = ResolutionDropdown.resolutionNumbers[value];
+        Debug.Log(resolution);
+        Screen.SetResolution((int)resolution.x, (int)resolution.y, Screen.fullScreen);
     }
 }

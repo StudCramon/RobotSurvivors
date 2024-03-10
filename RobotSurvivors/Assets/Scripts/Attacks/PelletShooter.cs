@@ -7,13 +7,14 @@ public class PelletShooter : GenericAttack
 {
     [SerializeField] float coolDown;
     [SerializeField] PelletSO pellet;
+    int currentLevel = 1;
     
-    DestroyableObject attackOwner;
+    //DestroyableObject attackOwner;
     bool readyToFire;
 
     public override float CoolDown { get => coolDown; set => coolDown = value; }
     public override bool ReadyToFire { get => readyToFire; set => readyToFire = value; }
-    public override DestroyableObject AttackOwner { get => attackOwner; set => attackOwner = value; }
+    //public override DestroyableObject AttackOwner { get => attackOwner; set => attackOwner = value; }
 
     public PelletShooter()
     {
@@ -26,9 +27,14 @@ public class PelletShooter : GenericAttack
     {
         if (readyToFire)
         {
+            readyToFire = false;
             pellet.prefab.GetComponent<Pellet>().owner = owner;
             MonoBehaviour.Instantiate(pellet.prefab, position, direction);
-            readyToFire = false;
         }
+    }
+
+    IEnumerator WaitForSeconds(float seconds)
+    {
+        yield return new WaitForSeconds(seconds);
     }
 }

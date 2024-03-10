@@ -30,7 +30,14 @@ public class AttackHandler : MonoBehaviour
 
     public void AddAttack(GenericAttack attack)
     {
-        //attacks.Add(attack);
+        foreach(GenericAttack attackItem in attacks)
+        {
+            if(attackItem.GetType() == attack.GetType())
+            {
+                //levelUpAttack
+                return;
+            }
+        }
         pendingAttacks.Add(attack);
     }
 
