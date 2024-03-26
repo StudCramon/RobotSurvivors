@@ -4,6 +4,9 @@ using UnityEngine;
 
 public class BuffArmor : AbstractBuff
 {
+    [SerializeField] Sprite sprite;
+    public override Sprite Sprite { get => sprite; set => sprite = value; }
+
     string buffPrompt = "Increase Armor";
 
     public override string BuffPrompt { get => buffPrompt; set => buffPrompt = value; }

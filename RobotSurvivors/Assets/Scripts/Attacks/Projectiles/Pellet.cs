@@ -5,13 +5,14 @@ using UnityEngine;
 
 public class Pellet : MonoBehaviour
 {
-    float speed = 40.0f;
-    float timeOfLife = 1.0f;
-    float damage = 1.0f;
+    public float speed = 40.0f;
+    public float timeOfLife = 1.0f;
+    public float damage = 1.0f;
     public DestroyableObject owner;
     // Start is called before the first frame update
     void Start()
     {
+        AudioManager.instance.PlaySound(SoundNames.LASERSHOT);
         StartCoroutine(Dissapear());
     }
 

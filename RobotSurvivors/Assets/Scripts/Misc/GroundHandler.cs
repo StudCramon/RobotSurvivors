@@ -112,9 +112,9 @@ public class GroundHandler : MonoBehaviour
         vector[2] = camera.ViewportToWorldPoint(new Vector3(1.5f, -0.5f, camera.nearClipPlane));
         vector[3] = camera.ViewportToWorldPoint(new Vector3(1.5f, 1.5f, camera.nearClipPlane));
 
-        Debug.DrawLine(vector[0], vector[1]);
-        Debug.DrawLine(vector[1], vector[2]);
-        Debug.DrawLine(vector[2], vector[3]);
-        Debug.DrawLine(vector[3], vector[0]);
+       // Debug.DrawLine(vector[0], vector[1]);
+       // Debug.DrawLine(vector[1], vector[2]);
+       // Debug.DrawLine(vector[2], vector[3]);
+       // Debug.DrawLine(vector[3], vector[0]);
     }
 }

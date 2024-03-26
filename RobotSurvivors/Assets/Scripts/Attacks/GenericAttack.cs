@@ -3,11 +3,11 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-[System.Serializable]
-public abstract class GenericAttack 
+public interface GenericAttack 
 {
     public abstract float CoolDown { get; set; }
     public abstract bool ReadyToFire{ get; set; }
-    public abstract void ExecuteAttack(Vector3 position, Quaternion direction, DestroyableObject owner);
-    //public abstract DestroyableObject AttackOwner { get; set; }
+    public abstract void ExecuteAttack();
+    public abstract DestroyableObject AttackOwner { get; set; }
+    public abstract void LevelUp();
 }

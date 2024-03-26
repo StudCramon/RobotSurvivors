@@ -6,11 +6,11 @@ public class CircularSaw : MonoBehaviour
 {
     [SerializeField]float radius = 5.0f;
 
-    float counter = 0.0f;
+    public float counter = 0.0f;
     float speed = 5.0f;
     float rotationSpeed = 1000.0f;
-    float damage = 1.0f;
-    float timeOfLife = 150.0f;
+    public float damage = 1.0f;
+    public float timeOfLife = 10.0f;
     [SerializeField] public DestroyableObject owner;
     // Start is called before the first frame update
     void Start()

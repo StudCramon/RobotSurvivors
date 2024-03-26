@@ -24,8 +24,10 @@ public class BuffsPanel : MonoBehaviour
             randomIndex = Random.Range(0, availableIndexes.Count);
 
             child.GetComponentInChildren<TextMeshProUGUI>().text = buffs[availableIndexes[randomIndex]].BuffPrompt;
+            child.transform.GetChild(1).gameObject.GetComponentInChildren<Image>().sprite = buffs[availableIndexes[randomIndex]].Sprite;
             child.GetComponent<Button>().onClick.AddListener(ClosePanel);
             child.GetComponent<Button>().onClick.AddListener(buffs[availableIndexes[randomIndex]].Buff);
+            child.GetComponent<Button>().onClick.AddListener(buffs[availableIndexes[randomIndex]].UpdateAttacksUI);
 
             availableIndexes.RemoveAt(randomIndex);
         }

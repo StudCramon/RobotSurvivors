@@ -15,6 +15,7 @@ public class EnemyBehaviour : DestroyableObject
     float currentHealth;
     float knockbackMultiplier = 25.0f;
     float contactDamage = 1.0f;
+    float deletionDistance = 100.0f;
     int expPoints = 1;
 
     public Vector3 currentDirection { get; private set; }
@@ -56,7 +57,7 @@ public class EnemyBehaviour : DestroyableObject
 
     void HandleStatus()
     {
-        if (player == null)
+        if (player == null || currentDirection.magnitude > deletionDistance)
         {
             Destroy(this.gameObject);
         }

@@ -1,18 +1,15 @@
 using System.Collections;
 using System.Collections.Generic;
-using Unity.VisualScripting;
 using UnityEngine;
-using UnityEngine.UIElements;
 
-[System.Serializable]
-public class PelletShooter : GenericAttack
+public class CircularSawLauncher : GenericAttack
 {
-    [SerializeField] float coolDown = 1.0f;
-    [SerializeField] PelletSO pellet;
+    [SerializeField] float coolDown = 5.0f;
+    [SerializeField] GameObject projectilePrefab;
     int currentLevel = 1;
     int numberOfProjectiles = 1;
     float damage = 1.0f;
-    
+
     DestroyableObject attackOwner;
     bool readyToFire = true;
 
@@ -20,15 +17,19 @@ public class PelletShooter : GenericAttack
     public bool ReadyToFire { get => readyToFire; set => readyToFire = value; }
     public DestroyableObject AttackOwner { get => attackOwner; set => attackOwner = value; }
 
-    public PelletShooter(DestroyableObject attackOwner)
+    public CircularSawLauncher(DestroyableObject attackOwner)
     {
         this.attackOwner = attackOwner;
-        pellet = Resources.Load("ScriptableObjects/Pellets/BasicPellet") as PelletSO;
+        projectilePrefab = Resources.Load("Prefabs/Projectiles/CircularSawProjecile") as GameObject;
+        if(projectilePrefab == null)
+        {
+            Debug.LogError("projectilePrefab = null");
+        }
     }
 
     public void ExecuteAttack()
     {
-        if(attackOwner == null)
+        if (attackOwner == null)
         {
             Debug.LogError("No attack owner");
             return;
@@ -43,24 +44,26 @@ public class PelletShooter : GenericAttack
     IEnumerator AttackWithDelay(float seconds)
     {
         readyToFire = false;
-        pellet.prefab.GetComponent<Pellet>().owner = attackOwner;
-        Transform tempPellet = MonoBehaviour.Instantiate(pellet.prefab, attackOwner.transform.position, attackOwner.GetAttackDirection());
-        tempPellet.GetComponent<Pellet>().damage = damage;
+        projectilePrefab.GetComponent<CircularSaw>().owner = attackOwner;
+        GameObject tempPellet = MonoBehaviour.Instantiate(projectilePrefab, attackOwner.transform.position, attackOwner.GetAttackDirection());
+        tempPellet.GetComponent<CircularSaw>().damage = damage;
+        tempPellet.GetComponent<CircularSaw>().counter = 2 * Mathf.PI / numberOfProjectiles;
 
         for (int i = 0; i < numberOfProjectiles - 1; ++i)
         {
-            yield return new WaitForSeconds(seconds);
-            pellet.prefab.GetComponent<Pellet>().owner = attackOwner;
-            tempPellet = MonoBehaviour.Instantiate(pellet.prefab, attackOwner.transform.position, attackOwner.GetAttackDirection());
-            tempPellet.GetComponent<Pellet>().damage = damage;
+            //yield return new WaitForSeconds(seconds);
+            projectilePrefab.GetComponent<CircularSaw>().owner = attackOwner;
+            tempPellet = MonoBehaviour.Instantiate(projectilePrefab, attackOwner.transform.position, attackOwner.GetAttackDirection());
+            tempPellet.GetComponent<CircularSaw>().damage = damage;
+            tempPellet.GetComponent<CircularSaw>().counter = (2 * Mathf.PI / numberOfProjectiles) * (i + 2);
         }
-        yield return new WaitForSeconds(coolDown);
+        yield return new WaitForSeconds(coolDown + tempPellet.GetComponent<CircularSaw>().timeOfLife);
         readyToFire = true;
     }
 
     public void LevelUp()
     {
-        switch(++currentLevel)
+        switch (++currentLevel)
         {
             case 2:
                 ++numberOfProjectiles;

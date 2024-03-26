@@ -4,6 +4,9 @@ using UnityEngine;
 
 public class BuffHealth : AbstractBuff
 {
+    [SerializeField] Sprite sprite;
+    public override Sprite Sprite { get => sprite; set => sprite = value; }
+
     string buffPrompt = "Increase Health";
 
     public override string BuffPrompt { get => buffPrompt; set => buffPrompt = value; }

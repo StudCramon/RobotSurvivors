@@ -4,6 +4,9 @@ using UnityEngine;
 
 public class AddPelletShooter : AbstractBuff
 {
+    [SerializeField] Sprite sprite;
+    public override Sprite Sprite { get => sprite; set => sprite = value; }
+
     string buffPrompt = "Add Pellet Shooter";
 
     public override string BuffPrompt { get => buffPrompt; set => buffPrompt = value; }
@@ -11,6 +14,6 @@ public class AddPelletShooter : AbstractBuff
     public override void Buff()
     {
         Player player = FindObjectOfType<Player>();
-        player.attackHandler.AddAttack(new PelletShooter());
+        player.attackHandler.AddAttack(new PelletShooter(player));
     }
 }

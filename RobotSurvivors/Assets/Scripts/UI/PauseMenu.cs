@@ -6,6 +6,7 @@ public class PauseMenu : MonoBehaviour
 {
     [SerializeField] GameObject pausePanel;
     [SerializeField] GameInput gameInput;
+    [SerializeField] GameObject buffPanel;
     // Start is called before the first frame update
     bool buttonIsBeingHold = false;
     void Start()
@@ -16,7 +17,7 @@ public class PauseMenu : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if(gameInput.PauseMenuButtonPressed() && !buttonIsBeingHold)
+        if(gameInput.PauseMenuButtonPressed() && !buttonIsBeingHold && !buffPanel.activeInHierarchy)
         {
             if(pausePanel.activeInHierarchy)
             {

@@ -42,16 +42,19 @@ public class GameInput : MonoBehaviour
     {
         string nameOfTheScene = SceneManager.GetActiveScene().name;
         SceneManager.LoadScene(nameOfTheScene);
+        Time.timeScale = 1.0f;
     }
 
     public void LoadGame()
     {
         SceneManager.LoadScene(1);
+        Time.timeScale = 1.0f;
     }
 
     public void LoadMainMenu()
     {
         SceneManager.LoadScene(0);
+        Time.timeScale = 1.0f;
     }
 
     public void QuitGame()

@@ -34,6 +34,9 @@ public class EnemySpawner : MonoBehaviour
             readyToSpawn = false;
             StartCoroutine(SpawnEnemyWithCoolDown(coolDown));
         }
+        Debug.DrawLine(new Vector3(mainCamera.transform.position.x, mainCamera.transform.position.y, 0.0f), new Vector3(outsideCoordinateX, outsideCoordinateY, 0.0f), color: Color.red);
+        //Debug.DrawLine(new Vector3(mainCamera.transform.position.x, mainCamera.transform.position.y, 0.0f), new Vector3(outsideCoordinateX, 0.0f, 0.0f), color: Color.red);
+        //Debug.DrawLine(new Vector3(mainCamera.transform.position.x, mainCamera.transform.position.y, 0.0f), new Vector3(0.0f, outsideCoordinateY, 0.0f), color: Color.red);
     }
 
     IEnumerator SpawnEnemyWithCoolDown(float coolDown)
@@ -68,8 +71,8 @@ public class EnemySpawner : MonoBehaviour
 
         Vector3 upperRightCornerCameraCoord = mainCamera.ViewportToWorldPoint(new Vector3(1.0f, 1.0f, mainCamera.nearClipPlane));
 
-        outsideCoordinateX = upperRightCornerCameraCoord.x;
-        outsideCoordinateY = upperRightCornerCameraCoord.y;
+        outsideCoordinateX = upperRightCornerCameraCoord.x - mainCamera.transform.position.x;
+        outsideCoordinateY = upperRightCornerCameraCoord.y - mainCamera.transform.position.y;
 
         if (RandomSign() == 1)
         {
@@ -93,7 +96,7 @@ public class EnemySpawner : MonoBehaviour
         }
         else
         {
-            coolDown = 0.0f;
+            coolDown = 0.1f;
         }
         Debug.Log("SpawnRate is: " + coolDown);
     }

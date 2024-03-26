@@ -11,12 +11,12 @@ public class AttackHandler : MonoBehaviour
     List<GenericAttack> pendingAttacks = new List<GenericAttack>();
 
     bool coroutineIsRunning = false;
-    float delayBetweenAttacks = 0.2f;
+    float delayBetweenAttacks = 0.1f;
 
     void Start()
     {
         attacks = new List<GenericAttack>(); //=============REFACTOR============================
-        attacks.Add(new PelletShooter());    //=================THIS==========================
+        this.AddAttack(new CircularSawLauncher(attackHolder));    //=================THIS==========================
     }
 
     // Update is called once per frame
@@ -34,10 +34,11 @@ public class AttackHandler : MonoBehaviour
         {
             if(attackItem.GetType() == attack.GetType())
             {
-                //levelUpAttack
+                attackItem.LevelUp();
                 return;
             }
         }
+        attack.AttackOwner = attackHolder;
         pendingAttacks.Add(attack);
     }
 
@@ -50,21 +51,10 @@ public class AttackHandler : MonoBehaviour
 
         pendingAttacks.Clear();
 
-        foreach (GenericAttack attack in attacks)
-        {
-            attack.ReadyToFire = true;
-        }
-    }
-
-    public void AddPelletShooter()
-    {
-        pendingAttacks.Add(new PelletShooter());
-    }
-
-    IEnumerator WaitForCoolDown(int attackIndex)
-    {
-        yield return new WaitForSeconds(attacks[attackIndex].CoolDown);
-        attacks[attackIndex].ReadyToFire = true;
+        //foreach (GenericAttack attack in attacks)
+        //{
+        //    attack.ReadyToFire = true;
+        //}
     }
 
     IEnumerator AttacksWithDelay(float delay)
@@ -72,20 +62,14 @@ public class AttackHandler : MonoBehaviour
         coroutineIsRunning = true;
         for (int i = 0; i < attacks.Count; i++)
         {
-            if (attacks[i].ReadyToFire)
-            {
-                yield return new WaitForSeconds(delay);
-                attacks[i].ExecuteAttack(attackHolder.transform.position, attackHolder.GetAttackDirection(), attackHolder);
-                AudioManager.instance.PlaySound(SoundNames.LASERSHOT);
-                StartCoroutine(WaitForCoolDown(i));
-            }
+            attacks[i].ExecuteAttack();
         }
 
         if (pendingAttacks.Count > 0)
         {
             TransferPendingAttacks();
         }
-        yield return new WaitForSeconds(delay * 5.0f);
+        yield return new WaitForSeconds(delay);
         coroutineIsRunning = false;
     }
 }
